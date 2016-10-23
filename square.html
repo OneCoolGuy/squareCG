@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+   /* canvas { */
+   /*    width: 100vw; */
+   /*    height: 100vh; */
+   /*    display; block; */
+   /* } */
+</style>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+uniform float theta;
+uniform float vXoffset;
+uniform float vYoffset;
+attribute vec4 vPosition;
+attribute vec4 vColor;
+varying vec4 fColor;
+varying vec4 Position;
+
+
+void
+main()
+{
+    Position = vPosition;
+    Position = mat4(1.0, 0, 0, 0,
+                    0, 1.0, 0, 0,
+                    0, 0, 1.0, 0,
+                    -vXoffset, -vYoffset, 0, 1.0) * Position;
+    gl_Position = mat4(cos(theta),sin(theta), 0, 0,
+                        -sin(theta), cos(theta), 0 ,0,
+                        0, 0,1.0, 0,
+                        vXoffset, vYoffset, 0, 1.0) * Position;
+
+    fColor = vColor;
+    
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+varying vec4 fColor;
+
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="https://www.cs.unm.edu/~angel/WebGL/7E/Common/MV.js"></script>
+<script type="text/javascript" src="https://www.cs.unm.edu/~angel/WebGL/7E/Common/webgl-utils.js"></script>
+<script type="text/javascript" src="https://www.cs.unm.edu/~angel/WebGL/7E/Common/initShaders.js"></script>
+<script type="text/javascript" src="square.js"></script>
+</head>
+
+<body>
+<p>
+
+<button id= "white">White</button>
+<button id= "blue">Blue</button>
+<button id= "green">Green</button>
+<button id= "red">Red</button>
+
+</p>
+<canvas id="gl-canvas" width="1024" height="1024">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+</body>
+</html>
